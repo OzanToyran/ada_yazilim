@@ -17,7 +17,7 @@ def rezervasyon():
     KisilerFarkliVagonlaraYerlestirilebilir = data["KisilerFarkliVagonlaraYerlestirilebilir"]
     
     RezervasyonYapilabilir=True
-    YerlesimAyrinti=[]
+    YerlesimAyrinti=[ ]
  # Rezervasyona uygunluğu kontrol et
     if RezervasyonYapilacakKisiSayisi>0:
         for vagon in vagonlar:
@@ -41,10 +41,9 @@ def rezervasyon():
 
                         kisi_sayisi=RezervasyonYapilacakKisiSayisi
 
-                        YerlesimAyrinti.append({
-                            "VagonAdi": vagon_adi,
-                            "KisiSayisi":round(kisi_sayisi)
-                    })
+                        YerlesimAyrinti.append({"VagonAdi": vagon_adi,"KisiSayisi":round(kisi_sayisi)})      
+                        #Bu kısım çıktıda ters sırayla basılıyor. nedenini çözemedim henüz.               
+                    
 
 
                     else:
@@ -53,29 +52,30 @@ def rezervasyon():
                         RezervasyonYapilacakKisiSayisi=RezervasyonYapilacakKisiSayisi-bos_koltuk   
 
                         YerlesimAyrinti.append({
-                       "VagonAdi": vagon_adi,
-                       "KisiSayisi":round(kisi_sayisi)
+                            "VagonAdi": vagon_adi, 
+                            "KisiSayisi":round(kisi_sayisi)
+                           
                         }) 
-#===============Yolcular farklı vagon istemiyorsa========================
+#===============Yolcular farklı vagonda olmak istemiyorsa========================
                 else:     
                     if bos_koltuk >= RezervasyonYapilacakKisiSayisi:
 
                         kisi_sayisi=RezervasyonYapilacakKisiSayisi
 
                         YerlesimAyrinti.append({
-                            "VagonAdi": vagon_adi,
-                            "KisiSayisi":round(kisi_sayisi)
+                            "KisiSayisi":round(kisi_sayisi),
+                            "VagonAdi": vagon_adi                            
                         })
                         continue 
 
 
             
-    sonuc = {
+    response = {
         "RezervasyonYapilabilir": True,
-        "YerlesimAyrinti":YerlesimAyrinti
+        "YerlesimAyrinti": YerlesimAyrinti
     }
 
-    return jsonify(sonuc), 201
+    return jsonify(response), 202
 
 if __name__== "__main__":
   app.run(debug=True)
